@@ -6,143 +6,156 @@
   <title>WALL·E — AI Mental Wellness Companion</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- ============================================================
-       FLOATING BACKGROUND ORBS (purely decorative)
-  ============================================================ -->
+ 
+  <!-- ═══════════════════════════════════════════════════
+       AMBIENT BACKGROUND
+  ═══════════════════════════════════════════════════ -->
+  <div class="bg-grid"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
   <div class="orb orb-4"></div>
-
-  <!-- ============================================================
-       AUTH SCREEN  (login / signup)
-  ============================================================ -->
+ 
+  <!-- ═══════════════════════════════════════════════════
+       AUTH SCREEN
+  ═══════════════════════════════════════════════════ -->
   <div id="auth-screen" class="auth-screen">
     <div class="auth-card">
-
       <div class="auth-logo">
-        <span class="logo-icon">🤖</span>
-        <h1 class="logo-text">WALL·E</h1>
-        <p class="logo-sub">AI Mental Wellness Companion</p>
-      </div>
-
-      <!-- Login Form -->
-      <div id="login-form" class="auth-form active">
-        <h2>Welcome back</h2>
-        <p class="form-subtext">Your wellness journey continues here.</p>
-        <div class="input-group">
-          <label>Username</label>
-          <input type="text" id="login-username" placeholder="Enter your username" autocomplete="off" />
+        <div class="auth-robot-wrap">
+          <div class="auth-robot-ring"></div>
+          <span class="auth-robot-emoji">🤖</span>
         </div>
-        <div class="input-group">
-          <label>Password</label>
-          <input type="password" id="login-password" placeholder="Enter your password" />
+        <h1 class="auth-brand">WALL·E</h1>
+        <p class="auth-tagline">AI Mental Wellness Companion</p>
+      </div>
+ 
+      <div id="login-form" class="auth-form active">
+        <h2 class="auth-form-title">Welcome back</h2>
+        <p class="auth-form-sub">Your wellness journey continues here.</p>
+        <div class="field-group">
+          <label class="field-label">Username</label>
+          <input class="field-input" type="text" id="login-username" placeholder="Enter your username" autocomplete="off" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Password</label>
+          <input class="field-input" type="password" id="login-password" placeholder="Enter your password" />
         </div>
         <p id="login-error" class="form-error"></p>
-        <button class="btn-primary" onclick="login()">Sign In</button>
-        <p class="form-switch">Don't have an account? <a href="#" onclick="toggleAuth()">Sign Up</a></p>
+        <button class="btn-primary btn-full" onclick="AppController.login()">Sign In</button>
+        <p class="auth-hint">Demo: <strong>demo</strong> / <strong>demo1234</strong></p>
+        <p class="auth-switch">Don't have an account? <a onclick="AppController.toggleAuth()">Sign Up</a></p>
       </div>
-
-      <!-- Signup Form -->
+ 
       <div id="signup-form" class="auth-form">
-        <h2>Create account</h2>
-        <p class="form-subtext">Begin your path to wellness today.</p>
-        <div class="input-group">
-          <label>Full Name</label>
-          <input type="text" id="signup-name" placeholder="Your full name" autocomplete="off" />
+        <h2 class="auth-form-title">Create account</h2>
+        <p class="auth-form-sub">Begin your path to wellness today.</p>
+        <div class="field-group">
+          <label class="field-label">Full Name</label>
+          <input class="field-input" type="text" id="signup-name" placeholder="Your full name" autocomplete="off" />
         </div>
-        <div class="input-group">
-          <label>Username</label>
-          <input type="text" id="signup-username" placeholder="Choose a username" autocomplete="off" />
+        <div class="field-group">
+          <label class="field-label">Username</label>
+          <input class="field-input" type="text" id="signup-username" placeholder="Choose a username" autocomplete="off" />
         </div>
-        <div class="input-group">
-          <label>Password</label>
-          <input type="password" id="signup-password" placeholder="Create a password" />
+        <div class="field-group">
+          <label class="field-label">Password</label>
+          <input class="field-input" type="password" id="signup-password" placeholder="Create a password (min 4 chars)" />
         </div>
         <p id="signup-error" class="form-error"></p>
-        <button class="btn-primary" onclick="signup()">Get Started</button>
-        <p class="form-switch">Already have an account? <a href="#" onclick="toggleAuth()">Sign In</a></p>
+        <button class="btn-primary btn-full" onclick="AppController.signup()">Get Started</button>
+        <p class="auth-switch">Already have an account? <a onclick="AppController.toggleAuth()">Sign In</a></p>
       </div>
-
     </div>
   </div>
-
-  <!-- ============================================================
-       MAIN APPLICATION  (hidden until logged in)
-  ============================================================ -->
+ 
+  <!-- ═══════════════════════════════════════════════════
+       MAIN APPLICATION
+  ═══════════════════════════════════════════════════ -->
   <div id="app" class="app hidden">
-
-    <!-- ── SIDEBAR ─────────────────────────────────────────── -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <span class="logo-icon-sm">🤖</span>
-        <span class="sidebar-brand">WALL·E</span>
-        <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+ 
+    <!-- ───── SIDEBAR ───────────────────────────────── -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-logo">
+        <span class="sidebar-logo-icon">🤖</span>
+        <span class="sidebar-logo-text">WALL·E</span>
+        <button class="sidebar-close-btn" onclick="AppController.toggleSidebar()">✕</button>
       </div>
-
-      <div class="sidebar-user">
-        <div class="user-avatar" id="user-avatar">U</div>
-         <div class="sidebar-ws-widget">
-        <div class="sidebar-ws-top">
-          <span class="sidebar-ws-label">Wellness</span>
-          <span class="sidebar-ws-val" id="sidebar-ws-val">—%</span>
-        </div>
-        <div class="sidebar-ws-track">
-          <div class="sidebar-ws-bar" id="sidebar-ws-bar"></div>
-        </div>
-        <span class="sidebar-ws-status" id="sidebar-ws-status">Calculating…</span>
-      </div>
-        <div>
-          <p class="user-name" id="sidebar-username">User</p>
-          <p class="user-status">✦ Wellness Active</p>
+ 
+      <div class="sidebar-profile">
+        <div class="profile-avatar" id="user-avatar">U</div>
+        <div class="profile-info">
+          <p class="profile-name" id="sidebar-username">User</p>
+          <span class="profile-badge">✦ Active</span>
         </div>
       </div>
-
+ 
+      <div class="sidebar-score-block">
+        <div class="ssb-header">
+          <span class="ssb-label">Wellness Score</span>
+          <span class="ssb-value" id="sidebar-ws-val">—</span>
+        </div>
+        <div class="ssb-bar-track">
+          <div class="ssb-bar-fill" id="sidebar-ws-bar"></div>
+        </div>
+        <span class="ssb-status" id="sidebar-ws-status">Calculating…</span>
+      </div>
+ 
       <nav class="sidebar-nav">
-        <a class="nav-item active" data-section="dashboard" onclick="navigate('dashboard')">
-          <span class="nav-icon">◈</span> Dashboard
+        <a class="nav-link active" data-section="dashboard" onclick="AppController.navigate('dashboard')">
+          <span class="nav-link-icon">⬡</span>
+          <span class="nav-link-text">Dashboard</span>
         </a>
-        <a class="nav-item" data-section="mood" onclick="navigate('mood')">
-          <span class="nav-icon">◉</span> Mood Tracker
+        <a class="nav-link" data-section="mood" onclick="AppController.navigate('mood')">
+          <span class="nav-link-icon">◉</span>
+          <span class="nav-link-text">Mood Tracker</span>
         </a>
-        <a class="nav-item" data-section="chat" onclick="navigate('chat')">
-          <span class="nav-icon">◎</span> AI Companion
+        <a class="nav-link" data-section="chat" onclick="AppController.navigate('chat')">
+          <span class="nav-link-icon">◎</span>
+          <span class="nav-link-text">AI Companion</span>
         </a>
-        <a class="nav-item" data-section="journal" onclick="navigate('journal')">
-          <span class="nav-icon">◐</span> Journal
+        <a class="nav-link" data-section="journal" onclick="AppController.navigate('journal')">
+          <span class="nav-link-icon">◐</span>
+          <span class="nav-link-text">Journal</span>
         </a>
-        <a class="nav-item" data-section="habits" onclick="navigate('habits')">
-          <span class="nav-icon">◑</span> Habits
+        <a class="nav-link" data-section="habits" onclick="AppController.navigate('habits')">
+          <span class="nav-link-icon">◑</span>
+          <span class="nav-link-text">Habits</span>
         </a>
-        <a class="nav-item" data-section="recommendations" onclick="navigate('recommendations')">
-          <span class="nav-icon">◒</span> Insights
+        <a class="nav-link nav-link-highlight" data-section="moodboost" onclick="AppController.navigate('moodboost')">
+          <span class="nav-link-icon">✦</span>
+          <span class="nav-link-text">Mood Boost</span>
+          <span class="nav-badge">NEW</span>
         </a>
-         <a class="nav-item nav-new" data-section="moodboost" onclick="navigate('moodboost')">
-          <span class="nav-icon">◒</span> Mood Boost
+        <a class="nav-link" data-section="recommendations" onclick="AppController.navigate('recommendations')">
+          <span class="nav-link-icon">◒</span>
+          <span class="nav-link-text">Insights</span>
         </a>
-        <a class="nav-item nav-new" data-section="report" onclick="navigate('report')">
-          <span class="nav-icon">◓</span> Report
+        <a class="nav-link" data-section="report" onclick="AppController.navigate('report')">
+          <span class="nav-link-icon">◓</span>
+          <span class="nav-link-text">Report</span>
         </a>
       </nav>
-
-      <button class="btn-logout" onclick="logout()">↩ Sign Out</button>
+ 
+      <button class="btn-logout" onclick="AppController.logout()">
+        <span>↩</span> Sign Out
+      </button>
     </aside>
-
-    <!-- ── MAIN CONTENT ──────────────────────────────────────── -->
-    <main class="main-content">
-
-      <!-- Top Bar -->
+ 
+    <!-- ───── MAIN CONTENT ──────────────────────────── -->
+    <main class="main-wrap">
+ 
+      <!-- Topbar -->
       <header class="topbar">
-        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-        <div class="topbar-title" id="topbar-title">Dashboard</div>
-        <div class="topbar-right">
-           <div class="ws-topbar-pill" id="ws-topbar-pill" onclick="navigate('dashboard')" title="View Wellness Score">
+        <button class="topbar-menu" onclick="AppController.toggleSidebar()">☰</button>
+        <h1 class="topbar-title" id="topbar-title">Dashboard</h1>
+        <div class="topbar-actions">
+          <div class="ws-pill" onclick="AppController.navigate('dashboard')" title="Wellness Score">
             <span class="ws-pill-icon">⬡</span>
             <span id="ws-topbar-val">—</span>
           </div>
@@ -150,61 +163,63 @@
           <div class="topbar-avatar" id="topbar-avatar">U</div>
         </div>
       </header>
-
-      <!-- ──────────────────────────────────────────────────────
-           SECTION: DASHBOARD
-      ────────────────────────────────────────────────────── -->
-      <section id="section-dashboard" class="section active">
-        <div class="section-header">
-          <h2>Your Wellness Overview</h2>
-          <p>Here's how you've been doing lately.</p>
+ 
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: DASHBOARD                      ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-dashboard" class="page-section active">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title" id="dashboard-greeting">Your Wellness Overview</h2>
+            <p class="page-subtitle">Track your mental health journey in real time.</p>
+          </div>
         </div>
+ 
         <!-- Wellness Score Hero -->
         <div class="ws-hero card">
-          <div class="ws-hero-left">
-            <p class="ws-hero-label">WELLNESS SCORE</p>
-            <div class="ws-ring-wrap">
+          <div class="ws-hero-ring-side">
+            <p class="ws-ring-label">WELLNESS SCORE</p>
+            <div class="ws-ring-container">
               <svg class="ws-ring-svg" viewBox="0 0 120 120">
                 <defs>
                   <linearGradient id="wsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%"   stop-color="#52e3c2"/>
-                    <stop offset="100%" stop-color="#a78bfa"/>
+                    <stop offset="0%" stop-color="#34d399"/>
+                    <stop offset="100%" stop-color="#818cf8"/>
                   </linearGradient>
                 </defs>
-                <circle class="ws-ring-bg"   cx="60" cy="60" r="50"/>
-                <circle class="ws-ring-fill" id="ws-ring-fill" cx="60" cy="60" r="50"
-                        stroke-dasharray="314" stroke-dashoffset="314"
-                        stroke="url(#wsGrad)"/>
+                <circle class="ws-ring-track" cx="60" cy="60" r="50"/>
+                <circle class="ws-ring-progress" id="ws-ring-fill" cx="60" cy="60" r="50"
+                        stroke-dasharray="314" stroke-dashoffset="314" stroke="url(#wsGrad)"/>
               </svg>
-              <div class="ws-center">
-                <span class="ws-num" id="ws-score-num">—</span>
-                <span class="ws-unit">%</span>
+              <div class="ws-ring-center">
+                <span class="ws-ring-num" id="ws-score-num">—</span>
+                <span class="ws-ring-pct">%</span>
               </div>
             </div>
-            <div class="ws-status-badge" id="ws-status-badge">Calculating…</div>
+            <div class="ws-status-chip" id="ws-status-badge">Calculating…</div>
           </div>
-          <div class="ws-hero-right">
-            <p class="ws-breakdown-title">Score Breakdown</p>
-            <div class="ws-breakdown">
-              <div class="ws-brow">
-                <span class="ws-brow-label">😊 Mood</span>
-                <div class="ws-bbar-track"><div class="ws-bbar mint" id="wb-mood"></div></div>
-                <span class="ws-brow-val" id="wb-mood-val">—%</span>
+          <div class="ws-hero-bars-side">
+            <p class="ws-bars-title">Score Breakdown</p>
+            <div class="ws-bars-list">
+              <div class="ws-bar-row">
+                <span class="ws-bar-lbl">😊 Mood</span>
+                <div class="ws-bar-track"><div class="ws-bar-fill c-emerald" id="wb-mood"></div></div>
+                <span class="ws-bar-val" id="wb-mood-val">—%</span>
               </div>
-              <div class="ws-brow">
-                <span class="ws-brow-label">✅ Habits</span>
-                <div class="ws-bbar-track"><div class="ws-bbar sky"  id="wb-habit"></div></div>
-                <span class="ws-brow-val" id="wb-habit-val">—%</span>
+              <div class="ws-bar-row">
+                <span class="ws-bar-lbl">✅ Habits</span>
+                <div class="ws-bar-track"><div class="ws-bar-fill c-sky" id="wb-habit"></div></div>
+                <span class="ws-bar-val" id="wb-habit-val">—%</span>
               </div>
-              <div class="ws-brow">
-                <span class="ws-brow-label">📓 Journal</span>
-                <div class="ws-bbar-track"><div class="ws-bbar amber" id="wb-journal"></div></div>
-                <span class="ws-brow-val" id="wb-journal-val">—%</span>
+              <div class="ws-bar-row">
+                <span class="ws-bar-lbl">📓 Journal</span>
+                <div class="ws-bar-track"><div class="ws-bar-fill c-amber" id="wb-journal"></div></div>
+                <span class="ws-bar-val" id="wb-journal-val">—%</span>
               </div>
-              <div class="ws-brow">
-                <span class="ws-brow-label">💬 Chat</span>
-                <div class="ws-bbar-track"><div class="ws-bbar violet" id="wb-chat"></div></div>
-                <span class="ws-brow-val" id="wb-chat-val">—%</span>
+              <div class="ws-bar-row">
+                <span class="ws-bar-lbl">💬 Chat</span>
+                <div class="ws-bar-track"><div class="ws-bar-fill c-violet" id="wb-chat"></div></div>
+                <span class="ws-bar-val" id="wb-chat-val">—%</span>
               </div>
             </div>
             <p class="ws-tip" id="ws-tip"></p>
@@ -212,199 +227,228 @@
         </div>
  
         <!-- Stats Row -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">🌤</div>
-            <div class="stat-info">
-              <p class="stat-label">Today's Mood</p>
-              <p class="stat-value" id="stat-today-mood">—</p>
+        <div class="stats-row">
+          <div class="stat-tile" onclick="AppController.navigate('mood')">
+            <div class="stat-tile-icon">🌤</div>
+            <div class="stat-tile-body">
+              <p class="stat-tile-label">Today's Mood</p>
+              <p class="stat-tile-value" id="stat-today-mood">—</p>
             </div>
+            <span class="stat-tile-arrow">›</span>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">🔥</div>
-            <div class="stat-info">
-              <p class="stat-label">Habit Streak</p>
-              <p class="stat-value" id="stat-streak">0 days</p>
+          <div class="stat-tile" onclick="AppController.navigate('habits')">
+            <div class="stat-tile-icon">🔥</div>
+            <div class="stat-tile-body">
+              <p class="stat-tile-label">Habit Streak</p>
+              <p class="stat-tile-value" id="stat-streak">0 days</p>
             </div>
+            <span class="stat-tile-arrow">›</span>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">📓</div>
-            <div class="stat-info">
-              <p class="stat-label">Journal Entries</p>
-              <p class="stat-value" id="stat-journal-count">0</p>
+          <div class="stat-tile" onclick="AppController.navigate('journal')">
+            <div class="stat-tile-icon">📓</div>
+            <div class="stat-tile-body">
+              <p class="stat-tile-label">Journal Entries</p>
+              <p class="stat-tile-value" id="stat-journal-count">0</p>
             </div>
+            <span class="stat-tile-arrow">›</span>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">✅</div>
-            <div class="stat-info">
-              <p class="stat-label">Habits Today</p>
-              <p class="stat-value" id="stat-habits-today">0/0</p>
+          <div class="stat-tile" onclick="AppController.navigate('habits')">
+            <div class="stat-tile-icon">✅</div>
+            <div class="stat-tile-body">
+              <p class="stat-tile-label">Habits Today</p>
+              <p class="stat-tile-value" id="stat-habits-today">0/0</p>
             </div>
+            <span class="stat-tile-arrow">›</span>
           </div>
         </div>
-
-        <!-- Charts Row -->
-        <div class="charts-grid">
+ 
+        <!-- Charts -->
+        <div class="charts-duo">
           <div class="card chart-card">
-            <h3>Mood Trend (Last 7 Days)</h3>
-            <div class="chart-wrap">
-              <canvas id="moodTrendChart"></canvas>
+            <div class="chart-card-head">
+              <h3 class="chart-card-title">Mood Trend (7 Days)</h3>
+              <span class="chart-trend-chip" id="mood-trend-badge"></span>
             </div>
+            <div class="chart-body"><canvas id="moodTrendChart"></canvas></div>
           </div>
           <div class="card chart-card">
-            <h3>Mood Distribution</h3>
-            <div class="chart-wrap">
-              <canvas id="moodDistChart"></canvas>
-            </div>
+            <h3 class="chart-card-title">Mood Distribution</h3>
+            <div class="chart-body"><canvas id="moodDistChart"></canvas></div>
           </div>
         </div>
-
-        <!-- Habit Progress Chart -->
-        <div class="card chart-card-wide">
-          <h3>Weekly Habit Completion</h3>
-          <div class="chart-wrap-wide">
-            <canvas id="habitChart"></canvas>
-          </div>
+ 
+        <div class="card chart-card mt-4">
+          <h3 class="chart-card-title">Weekly Habit Completion</h3>
+          <div class="chart-body-wide"><canvas id="habitChart"></canvas></div>
         </div>
-
       </section>
-
-      <!-- ──────────────────────────────────────────────────────
-           SECTION: MOOD TRACKER
-      ────────────────────────────────────────────────────── -->
-      <section id="section-mood" class="section">
-        <div class="section-header">
-          <h2>Mood Tracker</h2>
-          <p>How are you feeling right now?</p>
+ 
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: MOOD TRACKER                   ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-mood" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">Mood Tracker</h2>
+          <p class="page-subtitle">How are you feeling right now?</p>
         </div>
-
+ 
         <div class="card mood-log-card">
-          <h3>Log Today's Mood</h3>
+          <h3 class="card-title">Log Today's Mood</h3>
           <p class="mood-prompt">Select the emotion that best describes you:</p>
-          <div class="mood-picker">
-            <button class="mood-btn" data-mood="Happy"    data-score="5" onclick="selectMood(this)">😊<span>Happy</span></button>
-            <button class="mood-btn" data-mood="Calm"     data-score="4" onclick="selectMood(this)">😌<span>Calm</span></button>
-            <button class="mood-btn" data-mood="Neutral"  data-score="3" onclick="selectMood(this)">😐<span>Neutral</span></button>
-            <button class="mood-btn" data-mood="Stressed" data-score="2" onclick="selectMood(this)">😰<span>Stressed</span></button>
-            <button class="mood-btn" data-mood="Sad"      data-score="1" onclick="selectMood(this)">😢<span>Sad</span></button>
+          <div class="mood-grid">
+            <button class="mood-tile" data-mood="Happy"    data-score="5" onclick="MoodSystem.select(this)">
+              <span class="mood-tile-emoji">😊</span>
+              <span class="mood-tile-label">Happy</span>
+              <div class="mood-tile-bar" style="background:var(--c-amber)"></div>
+            </button>
+            <button class="mood-tile" data-mood="Calm"     data-score="4" onclick="MoodSystem.select(this)">
+              <span class="mood-tile-emoji">😌</span>
+              <span class="mood-tile-label">Calm</span>
+              <div class="mood-tile-bar" style="background:var(--c-sky)"></div>
+            </button>
+            <button class="mood-tile" data-mood="Neutral"  data-score="3" onclick="MoodSystem.select(this)">
+              <span class="mood-tile-emoji">😐</span>
+              <span class="mood-tile-label">Neutral</span>
+              <div class="mood-tile-bar" style="background:var(--c-slate)"></div>
+            </button>
+            <button class="mood-tile" data-mood="Stressed" data-score="2" onclick="MoodSystem.select(this)">
+              <span class="mood-tile-emoji">😰</span>
+              <span class="mood-tile-label">Stressed</span>
+              <div class="mood-tile-bar" style="background:var(--c-violet)"></div>
+            </button>
+            <button class="mood-tile" data-mood="Sad"      data-score="1" onclick="MoodSystem.select(this)">
+              <span class="mood-tile-emoji">😢</span>
+              <span class="mood-tile-label">Sad</span>
+              <div class="mood-tile-bar" style="background:var(--c-rose)"></div>
+            </button>
           </div>
-          <textarea id="mood-note" class="mood-note" placeholder="Add a note about how you're feeling... (optional)"></textarea>
-          <button class="btn-primary" onclick="logMood()">Save Mood Entry</button>
-          <p id="mood-saved-msg" class="success-msg"></p>
+          <textarea id="mood-note" class="field-textarea" placeholder="Add a note about how you're feeling… (optional)"></textarea>
+          <button class="btn-primary" onclick="MoodSystem.log()">Save Mood Entry</button>
+          <p id="mood-saved-msg" class="feedback-msg"></p>
         </div>
-
-        <div class="card">
-          <h3>Recent Mood Log</h3>
-          <div id="mood-history-list" class="mood-history-list">
+ 
+        <div class="card mt-4">
+          <h3 class="card-title">Recent Mood Log</h3>
+          <div id="mood-history-list" class="mood-log-list">
             <p class="empty-state">No mood entries yet. Log your first mood above!</p>
           </div>
         </div>
       </section>
-
-      <!-- ──────────────────────────────────────────────────────
-           SECTION: AI CHAT COMPANION
-      ────────────────────────────────────────────────────── -->
-      <section id="section-chat" class="section">
-        <div class="section-header">
-          <h2>AI Companion</h2>
-          <p>WALL·E is here to listen and support you.</p>
-        </div>
-
-        <div class="card chat-card">
-             <div class="personality-bar">
-            <span class="pbar-label">AI Mode:</span>
-            <div class="pbar-options">
-              <button class="pbar-btn active" data-mode="friend" onclick="setPersonality('friend')">
-                <span>😊</span><div><strong>Friend</strong><small>Warm &amp; casual</small></div>
-              </button>
-              <button class="pbar-btn" data-mode="therapist" onclick="setPersonality('therapist')">
-                <span>🧠</span><div><strong>Therapist</strong><small>Calm &amp; reflective</small></div>
-              </button>
-              <button class="pbar-btn" data-mode="motivator" onclick="setPersonality('motivator')">
-                <span>🚀</span><div><strong>Motivator</strong><small>Bold &amp; energetic</small></div>
-              </button>
-            </div>
-          </div>
  
-          <!-- Animated Avatar Panel (replaces old chat-header) -->
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: AI COMPANION (CHAT)            ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-chat" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">AI Companion</h2>
+          <p class="page-subtitle">WALL·E adapts to you. Pick a personality mode.</p>
+        </div>
+ 
+        <!-- Personality Bar -->
+        <div class="personality-bar card">
+          <span class="pbar-title">AI Personality:</span>
+          <div class="pbar-options">
+            <button class="pbar-btn active" data-mode="friend" onclick="AICompanion.setPersonality('friend')">
+              <span class="pbar-icon">😊</span>
+              <div class="pbar-text">
+                <strong>Friend</strong>
+                <small>Warm &amp; casual</small>
+              </div>
+            </button>
+            <button class="pbar-btn" data-mode="therapist" onclick="AICompanion.setPersonality('therapist')">
+              <span class="pbar-icon">🧠</span>
+              <div class="pbar-text">
+                <strong>Therapist</strong>
+                <small>Calm &amp; reflective</small>
+              </div>
+            </button>
+            <button class="pbar-btn" data-mode="motivator" onclick="AICompanion.setPersonality('motivator')">
+              <span class="pbar-icon">🚀</span>
+              <div class="pbar-text">
+                <strong>Motivator</strong>
+                <small>Bold &amp; energetic</small>
+              </div>
+            </button>
+          </div>
+        </div>
+ 
+        <div class="card chat-card">
+          <!-- Avatar Header -->
           <div class="chat-avatar-panel">
             <div class="chat-avatar-rig">
-              <div class="avatar-glow"   id="avatar-glow"></div>
-              <div class="avatar-face"   id="avatar-face">🤖</div>
-              <div class="avatar-ring r1" id="avatar-r1"></div>
-              <div class="avatar-ring r2" id="avatar-r2"></div>
+              <div class="avatar-glow" id="avatar-glow"></div>
+              <div class="avatar-face" id="avatar-face">🤖</div>
+              <div class="avatar-ring ar1" id="avatar-r1"></div>
+              <div class="avatar-ring ar2" id="avatar-r2"></div>
             </div>
-            <div class="chat-avatar-info">
-              <p class="chat-name">WALL·E</p>
-              <p class="chat-status"><span class="status-dot"></span>Online — always here</p>
-              <p class="avatar-mood-txt" id="avatar-mood-txt">Ready to listen</p>
-              <span class="pchip" id="pchip">😊 Friend Mode</span>
+            <div class="chat-avatar-meta">
+              <p class="chat-bot-name">WALL·E</p>
+              <p class="chat-bot-status"><span class="online-dot"></span>Online — always here</p>
+              <p class="chat-bot-mood" id="avatar-mood-txt">Ready to listen</p>
+              <span class="personality-chip" id="pchip">😊 Friend Mode</span>
             </div>
-            <button class="btn-secondary btn-sm" onclick="clearChat()" style="margin-left:auto;align-self:flex-start;">Clear</button>
+            <button class="btn-ghost btn-sm clear-chat-btn" onclick="AICompanion.clearChat()">Clear</button>
           </div>
  
-            <div>
-              <p class="chat-name">WALL·E</p>
-              <p class="chat-status"><span class="status-dot"></span>Online — always here for you</p>
-            </div>
-            <button class="btn-secondary btn-sm" onclick="clearChat()">Clear Chat</button>
-          </div>
-
-          <div class="chat-messages" id="chat-messages">
-            <!-- Messages are injected by JS -->
-          </div>
-
-          <div class="chat-input-area">
-            <textarea id="chat-input" class="chat-input" placeholder="Type a message to WALL·E..." rows="1" onkeydown="chatKeyDown(event)"></textarea>
-            <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+          <!-- Messages -->
+          <div class="chat-messages" id="chat-messages"></div>
+ 
+          <!-- Input -->
+          <div class="chat-input-row">
+            <textarea id="chat-input" class="chat-input-field" rows="1"
+              placeholder="Message WALL·E…"
+              onkeydown="AICompanion.handleKey(event)"></textarea>
+            <button class="chat-send-btn" onclick="AICompanion.send()">
+              <span>➤</span>
+            </button>
           </div>
         </div>
       </section>
-
-      <!-- ──────────────────────────────────────────────────────
-           SECTION: JOURNAL
-      ────────────────────────────────────────────────────── -->
-      <section id="section-journal" class="section">
-        <div class="section-header">
-          <h2>Wellness Journal</h2>
-          <p>Reflect, express, and grow.</p>
+ 
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: JOURNAL                        ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-journal" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">Wellness Journal</h2>
+          <p class="page-subtitle">Reflect, express, and grow.</p>
         </div>
-
+ 
         <div class="journal-layout">
-          <div class="card journal-write-card">
-            <h3 id="journal-form-title">New Entry</h3>
-            <input type="text" id="journal-title" class="journal-title-input" placeholder="Entry title..." />
-            <textarea id="journal-body" class="journal-body-input" placeholder="Write your thoughts, feelings, or reflections here..."></textarea>
-            <div class="journal-actions">
-              <button class="btn-primary" onclick="saveJournalEntry()">Save Entry</button>
-              <button class="btn-ghost" onclick="clearJournalForm()" id="journal-cancel-btn" style="display:none;">Cancel Edit</button>
+          <div class="card journal-write-panel">
+            <h3 class="card-title" id="journal-form-title">New Entry</h3>
+            <input id="journal-title" class="field-input" type="text" placeholder="Entry title…" />
+            <textarea id="journal-body" class="field-textarea journal-body-area" placeholder="Write your thoughts, feelings, or reflections here…"></textarea>
+            <div class="journal-form-actions">
+              <button class="btn-primary" onclick="JournalSystem.save()">Save Entry</button>
+              <button class="btn-ghost" id="journal-cancel-btn" onclick="JournalSystem.clearForm()" style="display:none">Cancel Edit</button>
             </div>
-            <p id="journal-saved-msg" class="success-msg"></p>
+            <p id="journal-saved-msg" class="feedback-msg"></p>
           </div>
-
-          <div class="card journal-list-card">
-            <h3>Past Entries</h3>
+ 
+          <div class="card journal-entries-panel">
+            <h3 class="card-title">Past Entries</h3>
             <div id="journal-entries-list" class="journal-entries-list">
               <p class="empty-state">No journal entries yet. Write your first reflection!</p>
             </div>
           </div>
         </div>
       </section>
-
-      <!-- ──────────────────────────────────────────────────────
-           SECTION: HABIT TRACKER
-      ────────────────────────────────────────────────────── -->
-      <section id="section-habits" class="section">
-        <div class="section-header">
-          <h2>Habit Tracker</h2>
-          <p>Build consistent wellness routines.</p>
+ 
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: HABIT TRACKER                  ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-habits" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">Habit Tracker</h2>
+          <p class="page-subtitle">Build consistent wellness routines.</p>
         </div>
-
-        <div class="card habit-add-card">
-          <h3>Add a New Habit</h3>
+ 
+        <div class="card mb-4">
+          <h3 class="card-title">Add a New Habit</h3>
           <div class="habit-add-row">
-            <input type="text" id="new-habit-input" class="habit-input" placeholder="e.g. Morning meditation, 8 glasses of water..." />
-            <select id="new-habit-icon" class="habit-icon-select">
+            <input id="new-habit-input" class="field-input" type="text" placeholder="e.g. Morning meditation, 8 glasses of water…" />
+            <select id="new-habit-icon" class="field-select">
               <option value="🧘">🧘 Meditation</option>
               <option value="🏃">🏃 Exercise</option>
               <option value="💧">💧 Water</option>
@@ -414,197 +458,230 @@
               <option value="🌿">🌿 Nature</option>
               <option value="🎨">🎨 Creative</option>
             </select>
-            <button class="btn-primary" onclick="addHabit()">Add Habit</button>
+            <button class="btn-primary btn-add-habit" onclick="HabitSystem.add()">Add Habit</button>
           </div>
         </div>
-
-        <div class="card">
-          <h3>Today's Habits</h3>
-          <div id="habits-list" class="habits-list">
-            <p class="empty-state">No habits yet. Add your first wellness habit above!</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Habit Streaks</h3>
-          <div id="streaks-list" class="streaks-list">
-            <p class="empty-state">Complete habits to build your streak!</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ──────────────────────────────────────────────────────
-           SECTION: RECOMMENDATIONS / INSIGHTS
-      ────────────────────────────────────────────────────── -->
-      <section id="section-recommendations" class="section">
-        <div class="section-header">
-          <h2>Wellness Insights</h2>
-          <p>Personalized suggestions based on your mood patterns.</p>
-        </div>
-
-        <div id="recommendations-container" class="recommendations-grid">
-          <!-- Injected by JS -->
-        </div>
-
-        <div class="card affirmation-card">
-          <h3>Daily Affirmation</h3>
-          <p class="affirmation-text" id="affirmation-text">"Loading your affirmation..."</p>
-          <button class="btn-ghost" onclick="newAffirmation()">✦ New Affirmation</button>
-        </div>
-
-        <div class="card breathing-card">
-          <h3>4-7-8 Breathing Exercise</h3>
-          <p>A calming technique to reduce stress in minutes.</p>
-          <div class="breathing-circle-wrap">
-            <div class="breathing-circle" id="breathing-circle">
-              <span id="breathing-label">Tap to Start</span>
+ 
+        <div class="habits-layout">
+          <div class="card">
+            <h3 class="card-title">Today's Habits</h3>
+            <div id="habits-list" class="habits-list">
+              <p class="empty-state">No habits yet. Add your first wellness habit above!</p>
             </div>
           </div>
-          <p class="breathing-instruction" id="breathing-instruction">Click the circle to begin a guided breathing session.</p>
+          <div class="card">
+            <h3 class="card-title">🔥 Habit Streaks</h3>
+            <div id="streaks-list" class="streaks-list">
+              <p class="empty-state">Complete habits to build your streak!</p>
+            </div>
+          </div>
         </div>
       </section>
-<!-- ── MOOD BOOST ACTIVITIES ──────────────────────────────────── -->
-      <section id="section-moodboost" class="section">
-        <div class="section-header">
-          <h2>Mood Boost Activities</h2>
-          <p>Science-backed exercises to lift your spirits in minutes.</p>
+ 
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: MOOD BOOST ACTIVITIES          ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-moodboost" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">Mood Boost Activities</h2>
+          <p class="page-subtitle">Science-backed exercises to lift your spirits in minutes.</p>
         </div>
  
         <div class="boost-grid">
  
-          <!-- 1. Gratitude Exercise -->
-          <div class="card boost-card gratitude-card">
-            <div class="boost-card-head">
+          <!-- Gratitude Exercise -->
+          <div class="card boost-card">
+            <div class="boost-card-header">
               <span class="boost-big-icon">🙏</span>
               <div>
-                <h3>Gratitude Exercise</h3>
-                <p class="boost-tag">3 min · Rewires brain toward positivity</p>
+                <h3 class="boost-card-title">Gratitude Exercise</h3>
+                <p class="boost-card-tag">3 min · Rewires brain toward positivity</p>
               </div>
             </div>
-            <p class="boost-desc">Name 3 things you're grateful for right now — however small. Research shows daily gratitude practice measurably improves wellbeing within two weeks.</p>
-            <div class="gratitude-fields">
-              <div class="gratitude-row"><span class="grat-num">①</span>
-                <input type="text" id="grat-1" placeholder="I am grateful for…" /></div>
-              <div class="gratitude-row"><span class="grat-num">②</span>
-                <input type="text" id="grat-2" placeholder="I am grateful for…" /></div>
-              <div class="gratitude-row"><span class="grat-num">③</span>
-                <input type="text" id="grat-3" placeholder="I am grateful for…" /></div>
+            <p class="boost-card-desc">Name 3 things you're grateful for right now — however small. Research shows daily gratitude practice measurably improves wellbeing.</p>
+            <div class="gratitude-inputs">
+              <div class="gratitude-row">
+                <span class="grat-num">①</span>
+                <input class="field-input" type="text" id="grat-1" placeholder="I am grateful for…" />
+              </div>
+              <div class="gratitude-row">
+                <span class="grat-num">②</span>
+                <input class="field-input" type="text" id="grat-2" placeholder="I am grateful for…" />
+              </div>
+              <div class="gratitude-row">
+                <span class="grat-num">③</span>
+                <input class="field-input" type="text" id="grat-3" placeholder="I am grateful for…" />
+              </div>
             </div>
-            <button class="btn-primary boost-save-btn" onclick="saveGratitude()">Save Gratitude ✨</button>
-            <p id="grat-msg" class="success-msg"></p>
-            <div id="grat-history" class="grat-history"></div>
+            <button class="btn-primary" onclick="BoostSystem.saveGratitude()">Save Gratitude ✨</button>
+            <p id="grat-msg" class="feedback-msg"></p>
+            <div id="grat-history" class="grat-history-list"></div>
           </div>
  
-          <!-- 2. Meditation Timer -->
-          <div class="card boost-card meditation-card">
-            <div class="boost-card-head">
+          <!-- Meditation Timer -->
+          <div class="card boost-card">
+            <div class="boost-card-header">
               <span class="boost-big-icon">🧘</span>
               <div>
-                <h3>Meditation Timer</h3>
-                <p class="boost-tag">3–10 min · Mindfulness session</p>
+                <h3 class="boost-card-title">Meditation Timer</h3>
+                <p class="boost-card-tag">3–10 min · Mindfulness session</p>
               </div>
             </div>
-            <p class="boost-desc">Choose a duration, close your eyes, and let the timer guide your mindfulness practice. Even 3 minutes reduces cortisol significantly.</p>
-            <div class="med-dur-row">
-              <button class="med-dur-btn active" data-min="3"  onclick="pickMedDur(this,3)">3 min</button>
-              <button class="med-dur-btn"        data-min="5"  onclick="pickMedDur(this,5)">5 min</button>
-              <button class="med-dur-btn"        data-min="10" onclick="pickMedDur(this,10)">10 min</button>
+            <p class="boost-card-desc">Choose a duration, close your eyes, and let the timer guide your mindfulness practice. Even 3 minutes reduces cortisol significantly.</p>
+            <div class="med-duration-row">
+              <button class="dur-btn active" data-min="3"  onclick="BoostSystem.pickMedDur(this, 3)">3 min</button>
+              <button class="dur-btn"        data-min="5"  onclick="BoostSystem.pickMedDur(this, 5)">5 min</button>
+              <button class="dur-btn"        data-min="10" onclick="BoostSystem.pickMedDur(this, 10)">10 min</button>
             </div>
-            <div class="med-display">
+            <div class="med-timer-display">
               <div class="med-ring-wrap">
                 <svg class="med-svg" viewBox="0 0 120 120">
                   <circle class="med-track" cx="60" cy="60" r="50"/>
-                  <circle class="med-prog"  id="med-prog" cx="60" cy="60" r="50"
+                  <circle class="med-prog" id="med-prog" cx="60" cy="60" r="50"
                           stroke-dasharray="314" stroke-dashoffset="0"/>
                 </svg>
                 <div class="med-inner">
-                  <span class="med-time" id="med-time">3:00</span>
+                  <span class="med-time-label" id="med-time">3:00</span>
                 </div>
               </div>
             </div>
-            <p class="med-phase" id="med-phase">Press Start to begin your session</p>
-            <div class="med-controls">
-              <button class="btn-primary" id="med-btn" onclick="toggleMed()">▶ Start</button>
-              <button class="btn-ghost"   onclick="resetMed()">↺ Reset</button>
+            <p class="med-phase-label" id="med-phase">Press Start to begin your session</p>
+            <div class="med-btn-row">
+              <button class="btn-primary" id="med-btn" onclick="BoostSystem.toggleMed()">▶ Start</button>
+              <button class="btn-ghost"   onclick="BoostSystem.resetMed()">↺ Reset</button>
             </div>
           </div>
  
-          <!-- 3. Positive Affirmation Generator -->
-          <div class="card boost-card affirmation-gen-card">
-            <div class="boost-card-head">
-              <span class="boost-big-icon">✨</span>
+          <!-- 4-7-8 Breathing -->
+          <div class="card boost-card">
+            <div class="boost-card-header">
+              <span class="boost-big-icon">🌬️</span>
               <div>
-                <h3>Affirmation Generator</h3>
-                <p class="boost-tag">Instant · Read aloud 3× for best effect</p>
+                <h3 class="boost-card-title">4-7-8 Breathing</h3>
+                <p class="boost-card-tag">19 sec cycle · Nervous system reset</p>
               </div>
             </div>
-            <p class="boost-desc">Choose a category and let WALL·E serve you a personalised affirmation. Repeat it aloud slowly — repetition creates neurological change.</p>
-            <div class="aff-cats">
-              <button class="aff-cat active" data-cat="all"      onclick="setAffCat('all',this)">All</button>
-              <button class="aff-cat"        data-cat="strength" onclick="setAffCat('strength',this)">Strength</button>
-              <button class="aff-cat"        data-cat="peace"    onclick="setAffCat('peace',this)">Peace</button>
-              <button class="aff-cat"        data-cat="growth"   onclick="setAffCat('growth',this)">Growth</button>
+            <p class="boost-card-desc">Inhale 4s → Hold 7s → Exhale 8s. Activates parasympathetic nervous system and reduces anxiety within 2 minutes.</p>
+            <div class="breathing-wrap">
+              <div class="breathing-circle" id="breathing-circle">
+                <span id="breathing-label">Tap to Start</span>
+              </div>
+            </div>
+            <p class="breathing-hint" id="breathing-instruction">Click the circle to begin a guided breathing session.</p>
+          </div>
+ 
+          <!-- Affirmation Generator -->
+          <div class="card boost-card">
+            <div class="boost-card-header">
+              <span class="boost-big-icon">✨</span>
+              <div>
+                <h3 class="boost-card-title">Affirmation Generator</h3>
+                <p class="boost-card-tag">Instant · Read aloud 3× for best effect</p>
+              </div>
+            </div>
+            <p class="boost-card-desc">Choose a category and receive a personalised affirmation. Repeat it aloud — repetition creates neurological change.</p>
+            <div class="aff-cat-row">
+              <button class="aff-cat-btn active" data-cat="all"      onclick="BoostSystem.setAffCat('all', this)">All</button>
+              <button class="aff-cat-btn"        data-cat="strength" onclick="BoostSystem.setAffCat('strength', this)">Strength</button>
+              <button class="aff-cat-btn"        data-cat="peace"    onclick="BoostSystem.setAffCat('peace', this)">Peace</button>
+              <button class="aff-cat-btn"        data-cat="growth"   onclick="BoostSystem.setAffCat('growth', this)">Growth</button>
             </div>
             <div class="big-aff-box">
               <p class="big-aff-text" id="big-aff-text">"Loading…"</p>
             </div>
-            <button class="btn-ghost boost-save-btn" onclick="nextBigAff()">✦ Next Affirmation</button>
+            <button class="btn-ghost" onclick="BoostSystem.nextBigAff()">✦ Next Affirmation</button>
           </div>
  
-        </div><!-- /.boost-grid -->
-          <section id="section-report" class="section">
-        <div class="section-header">
-          <h2>Wellness Report</h2>
-          <p>AI-generated monthly summary of your mental wellness journey.</p>
+        </div>
+      </section>
+ 
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: INSIGHTS / RECOMMENDATIONS     ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-recommendations" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">Wellness Insights</h2>
+          <p class="page-subtitle">Personalized suggestions based on your mood patterns.</p>
+        </div>
+ 
+        <div id="recommendations-container" class="rec-grid"></div>
+ 
+        <div class="insights-bottom-row">
+          <div class="card affirmation-card">
+            <h3 class="card-title">Daily Affirmation</h3>
+            <p class="affirmation-quote" id="affirmation-text">"Loading your affirmation…"</p>
+            <button class="btn-ghost" onclick="AnalyticsSystem.newAffirmation()">✦ New Affirmation</button>
+          </div>
+ 
+          <div class="card breathing-card">
+            <h3 class="card-title">4-7-8 Breathing</h3>
+            <p class="card-desc">A calming technique to reduce stress in minutes.</p>
+            <div class="breathing-wrap">
+              <div class="breathing-circle" id="breathing-circle-2">
+                <span id="breathing-label-2">Tap to Start</span>
+              </div>
+            </div>
+            <p class="breathing-hint" id="breathing-instruction-2">Click the circle to begin.</p>
+          </div>
+        </div>
+      </section>
+ 
+      <!-- ╔══════════════════════════════════════════╗
+           ║  SECTION: WELLNESS REPORT                ║
+           ╚══════════════════════════════════════════╝ -->
+      <section id="section-report" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">Wellness Report</h2>
+          <p class="page-subtitle">AI-generated monthly summary of your mental wellness journey.</p>
         </div>
  
         <div class="report-toolbar">
-          <div class="report-month-nav">
-            <button class="btn-ghost btn-sm" onclick="reportPrev()">← Prev</button>
-            <span class="report-month-lbl" id="report-month-lbl">This Month</span>
-            <button class="btn-ghost btn-sm" onclick="reportNext()">Next →</button>
+          <div class="report-nav">
+            <button class="btn-ghost btn-sm" onclick="AnalyticsSystem.reportPrev()">← Prev</button>
+            <span class="report-month-label" id="report-month-lbl">This Month</span>
+            <button class="btn-ghost btn-sm" onclick="AnalyticsSystem.reportNext()">Next →</button>
           </div>
-          <button class="btn-primary report-dl-btn" onclick="downloadReport()">⬇ Download .txt</button>
+          <button class="btn-primary btn-sm" onclick="AnalyticsSystem.downloadReport()">⬇ Download</button>
         </div>
  
         <div class="report-grid">
- 
           <div class="card report-card">
-            <h3>📊 Summary</h3>
-            <div id="report-summary" class="report-summary-list"></div>
+            <h3 class="card-title">📊 Summary</h3>
+            <div id="report-summary" class="report-stat-list"></div>
           </div>
  
           <div class="card report-card">
-            <h3>😊 Mood Distribution</h3>
-            <div class="chart-wrap"><canvas id="reportMoodChart"></canvas></div>
-            <p class="report-insight" id="report-mood-insight"></p>
+            <h3 class="card-title">😊 Mood Distribution</h3>
+            <div class="chart-body"><canvas id="reportMoodChart"></canvas></div>
+            <p class="report-insight-text" id="report-mood-insight"></p>
           </div>
  
           <div class="card report-card">
-            <h3>✅ Habit Consistency</h3>
-            <div class="chart-wrap"><canvas id="reportHabitChart"></canvas></div>
-            <p class="report-insight" id="report-habit-insight"></p>
+            <h3 class="card-title">✅ Habit Consistency</h3>
+            <div class="chart-body"><canvas id="reportHabitChart"></canvas></div>
+            <p class="report-insight-text" id="report-habit-insight"></p>
           </div>
  
           <div class="card report-card report-ai-card">
-            <h3>🤖 AI Insights</h3>
+            <h3 class="card-title">🤖 AI Insights</h3>
             <div id="report-ai-list" class="report-ai-list"></div>
           </div>
-
+ 
           <div class="card report-card">
-            <h3>⚠ Notable Days</h3>
-            <div id="report-notable" class="report-notable"></div>
+            <h3 class="card-title">⚠ Notable Days</h3>
+            <div id="report-notable" class="report-notable-list"></div>
           </div>
-          
+ 
           <div class="card report-card">
-            <h3>📓 Journal Activity</h3>
+            <h3 class="card-title">📓 Journal Activity</h3>
             <div id="report-journal-bars" class="report-journal-bars"></div>
           </div>
-        </div><!-- /.report-grid -->
+        </div>
       </section>
+ 
     </main>
-  </div><!-- /#app -->
-
+  </div>
+ 
   <script src="script.js"></script>
 </body>
 </html>
