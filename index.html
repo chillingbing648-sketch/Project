@@ -3,41 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WALL·E — AI Mental Wellness Companion</title>
+  <title>WALL·E — Premium AI Mental Wellness</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
- 
-  <!-- ═══════════════════════════════════════════════════
-       AMBIENT BACKGROUND
-  ═══════════════════════════════════════════════════ -->
+
+  <!-- ── Atmospheric Background Layers ── -->
+  <div class="bg-noise"></div>
   <div class="bg-grid"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
   <div class="orb orb-4"></div>
- 
-  <!-- ═══════════════════════════════════════════════════
+
+  <!-- ══════════════════════════════════════════
        AUTH SCREEN
-  ═══════════════════════════════════════════════════ -->
+  ══════════════════════════════════════════ -->
   <div id="auth-screen" class="auth-screen">
-    <div class="auth-card">
+    <div class="auth-ambient-orb auth-ambient-1"></div>
+    <div class="auth-ambient-orb auth-ambient-2"></div>
+
+    <div class="auth-card glass-panel">
       <div class="auth-logo">
         <div class="auth-robot-wrap">
           <div class="auth-robot-ring"></div>
           <span class="auth-robot-emoji">🤖</span>
         </div>
         <h1 class="auth-brand">WALL·E</h1>
-        <p class="auth-tagline">AI Mental Wellness Companion</p>
+        <p class="auth-tagline">Elevated Mental Wellness</p>
       </div>
- 
+
+      <!-- Login Form -->
       <div id="login-form" class="auth-form active">
         <h2 class="auth-form-title">Welcome back</h2>
-        <p class="auth-form-sub">Your wellness journey continues here.</p>
+        <p class="auth-form-sub">Your sanctuary awaits.</p>
         <div class="field-group">
           <label class="field-label">Username</label>
           <input class="field-input" type="text" id="login-username" placeholder="Enter your username" autocomplete="off" />
@@ -51,7 +54,8 @@
         <p class="auth-hint">Demo: <strong>demo</strong> / <strong>demo1234</strong></p>
         <p class="auth-switch">Don't have an account? <a onclick="AppController.toggleAuth()">Sign Up</a></p>
       </div>
- 
+
+      <!-- Sign-Up Form -->
       <div id="signup-form" class="auth-form">
         <h2 class="auth-form-title">Create account</h2>
         <p class="auth-form-sub">Begin your path to wellness today.</p>
@@ -73,20 +77,20 @@
       </div>
     </div>
   </div>
- 
-  <!-- ═══════════════════════════════════════════════════
-       MAIN APPLICATION
-  ═══════════════════════════════════════════════════ -->
+
+  <!-- ══════════════════════════════════════════
+       MAIN APP
+  ══════════════════════════════════════════ -->
   <div id="app" class="app hidden">
- 
-    <!-- ───── SIDEBAR ───────────────────────────────── -->
-    <aside id="sidebar" class="sidebar">
+
+    <!-- ── Sidebar ── -->
+    <aside id="sidebar" class="sidebar glass-panel">
       <div class="sidebar-logo">
         <span class="sidebar-logo-icon">🤖</span>
         <span class="sidebar-logo-text">WALL·E</span>
         <button class="sidebar-close-btn" onclick="AppController.toggleSidebar()">✕</button>
       </div>
- 
+
       <div class="sidebar-profile">
         <div class="profile-avatar" id="user-avatar">U</div>
         <div class="profile-info">
@@ -94,7 +98,7 @@
           <span class="profile-badge">✦ Active</span>
         </div>
       </div>
- 
+
       <div class="sidebar-score-block">
         <div class="ssb-header">
           <span class="ssb-label">Wellness Score</span>
@@ -105,7 +109,7 @@
         </div>
         <span class="ssb-status" id="sidebar-ws-status">Calculating…</span>
       </div>
- 
+
       <nav class="sidebar-nav">
         <a class="nav-link active" data-section="dashboard" onclick="AppController.navigate('dashboard')">
           <span class="nav-link-icon">⬡</span>
@@ -140,18 +144,24 @@
           <span class="nav-link-icon">◓</span>
           <span class="nav-link-text">Report</span>
         </a>
+        <a class="nav-link" data-section="Sounds" onclick="AppController.navigate('sounds')">
+          <span class="nav-link-icon">≋</span>
+          <span class="nav-link-text">Zen Station</span>
+        </a>
       </nav>
- 
+
       <button class="btn-logout" onclick="AppController.logout()">
         <span>↩</span> Sign Out
       </button>
     </aside>
- 
-    <!-- ───── MAIN CONTENT ──────────────────────────── -->
+
+    <!-- Mobile backdrop — CSS sibling selector triggers when sidebar gets .open -->
+    <div class="sidebar-backdrop" onclick="AppController.toggleSidebar()"></div>
+
+    <!-- ── Main Content ── -->
     <main class="main-wrap">
- 
-      <!-- Topbar -->
-      <header class="topbar">
+
+      <header class="topbar glass-panel">
         <button class="topbar-menu" onclick="AppController.toggleSidebar()">☰</button>
         <h1 class="topbar-title" id="topbar-title">Dashboard</h1>
         <div class="topbar-actions">
@@ -163,10 +173,10 @@
           <div class="topbar-avatar" id="topbar-avatar">U</div>
         </div>
       </header>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: DASHBOARD                      ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           DASHBOARD
+      ══════════════════════════════════ -->
       <section id="section-dashboard" class="page-section active">
         <div class="page-header">
           <div>
@@ -174,18 +184,22 @@
             <p class="page-subtitle">Track your mental health journey in real time.</p>
           </div>
         </div>
- 
+
         <!-- Wellness Score Hero -->
-        <div class="ws-hero card">
+        <div class="ws-hero card glass-panel">
           <div class="ws-hero-ring-side">
             <p class="ws-ring-label">WELLNESS SCORE</p>
             <div class="ws-ring-container">
               <svg class="ws-ring-svg" viewBox="0 0 120 120">
                 <defs>
                   <linearGradient id="wsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#34d399"/>
-                    <stop offset="100%" stop-color="#818cf8"/>
+                    <stop offset="0%" stop-color="var(--c-emerald)"/>
+                    <stop offset="100%" stop-color="var(--c-violet)"/>
                   </linearGradient>
+                  <filter id="wsGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                  </filter>
                 </defs>
                 <circle class="ws-ring-track" cx="60" cy="60" r="50"/>
                 <circle class="ws-ring-progress" id="ws-ring-fill" cx="60" cy="60" r="50"
@@ -198,6 +212,7 @@
             </div>
             <div class="ws-status-chip" id="ws-status-badge">Calculating…</div>
           </div>
+
           <div class="ws-hero-bars-side">
             <p class="ws-bars-title">Score Breakdown</p>
             <div class="ws-bars-list">
@@ -225,10 +240,10 @@
             <p class="ws-tip" id="ws-tip"></p>
           </div>
         </div>
- 
+
         <!-- Stats Row -->
         <div class="stats-row">
-          <div class="stat-tile" onclick="AppController.navigate('mood')">
+          <div class="stat-tile glass-panel" onclick="AppController.navigate('mood')">
             <div class="stat-tile-icon">🌤</div>
             <div class="stat-tile-body">
               <p class="stat-tile-label">Today's Mood</p>
@@ -236,7 +251,7 @@
             </div>
             <span class="stat-tile-arrow">›</span>
           </div>
-          <div class="stat-tile" onclick="AppController.navigate('habits')">
+          <div class="stat-tile glass-panel" onclick="AppController.navigate('habits')">
             <div class="stat-tile-icon">🔥</div>
             <div class="stat-tile-body">
               <p class="stat-tile-label">Habit Streak</p>
@@ -244,7 +259,7 @@
             </div>
             <span class="stat-tile-arrow">›</span>
           </div>
-          <div class="stat-tile" onclick="AppController.navigate('journal')">
+          <div class="stat-tile glass-panel" onclick="AppController.navigate('journal')">
             <div class="stat-tile-icon">📓</div>
             <div class="stat-tile-body">
               <p class="stat-tile-label">Journal Entries</p>
@@ -252,7 +267,7 @@
             </div>
             <span class="stat-tile-arrow">›</span>
           </div>
-          <div class="stat-tile" onclick="AppController.navigate('habits')">
+          <div class="stat-tile glass-panel" onclick="AppController.navigate('habits')">
             <div class="stat-tile-icon">✅</div>
             <div class="stat-tile-body">
               <p class="stat-tile-label">Habits Today</p>
@@ -261,38 +276,38 @@
             <span class="stat-tile-arrow">›</span>
           </div>
         </div>
- 
+
         <!-- Charts -->
         <div class="charts-duo">
-          <div class="card chart-card">
+          <div class="card chart-card glass-panel">
             <div class="chart-card-head">
               <h3 class="chart-card-title">Mood Trend (7 Days)</h3>
               <span class="chart-trend-chip" id="mood-trend-badge"></span>
             </div>
             <div class="chart-body"><canvas id="moodTrendChart"></canvas></div>
           </div>
-          <div class="card chart-card">
+          <div class="card chart-card glass-panel">
             <h3 class="chart-card-title">Mood Distribution</h3>
             <div class="chart-body"><canvas id="moodDistChart"></canvas></div>
           </div>
         </div>
- 
-        <div class="card chart-card mt-4">
+
+        <div class="card chart-card mt-4 glass-panel">
           <h3 class="chart-card-title">Weekly Habit Completion</h3>
           <div class="chart-body-wide"><canvas id="habitChart"></canvas></div>
         </div>
       </section>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: MOOD TRACKER                   ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           MOOD TRACKER
+      ══════════════════════════════════ -->
       <section id="section-mood" class="page-section">
         <div class="page-header">
           <h2 class="page-title">Mood Tracker</h2>
           <p class="page-subtitle">How are you feeling right now?</p>
         </div>
- 
-        <div class="card mood-log-card">
+
+        <div class="card mood-log-card glass-panel">
           <h3 class="card-title">Log Today's Mood</h3>
           <p class="mood-prompt">Select the emotion that best describes you:</p>
           <div class="mood-grid">
@@ -326,26 +341,25 @@
           <button class="btn-primary" onclick="MoodSystem.log()">Save Mood Entry</button>
           <p id="mood-saved-msg" class="feedback-msg"></p>
         </div>
- 
-        <div class="card mt-4">
+
+        <div class="card mt-4 glass-panel">
           <h3 class="card-title">Recent Mood Log</h3>
           <div id="mood-history-list" class="mood-log-list">
             <p class="empty-state">No mood entries yet. Log your first mood above!</p>
           </div>
         </div>
       </section>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: AI COMPANION (CHAT)            ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           AI COMPANION (CHAT)
+      ══════════════════════════════════ -->
       <section id="section-chat" class="page-section">
         <div class="page-header">
           <h2 class="page-title">AI Companion</h2>
           <p class="page-subtitle">WALL·E adapts to you. Pick a personality mode.</p>
         </div>
- 
-        <!-- Personality Bar -->
-        <div class="personality-bar card">
+
+        <div class="personality-bar card glass-panel">
           <span class="pbar-title">AI Personality:</span>
           <div class="pbar-options">
             <button class="pbar-btn active" data-mode="friend" onclick="AICompanion.setPersonality('friend')">
@@ -371,9 +385,8 @@
             </button>
           </div>
         </div>
- 
-        <div class="card chat-card">
-          <!-- Avatar Header -->
+
+        <div class="card chat-card glass-panel">
           <div class="chat-avatar-panel">
             <div class="chat-avatar-rig">
               <div class="avatar-glow" id="avatar-glow"></div>
@@ -389,11 +402,9 @@
             </div>
             <button class="btn-ghost btn-sm clear-chat-btn" onclick="AICompanion.clearChat()">Clear</button>
           </div>
- 
-          <!-- Messages -->
+
           <div class="chat-messages" id="chat-messages"></div>
- 
-          <!-- Input -->
+
           <div class="chat-input-row">
             <textarea id="chat-input" class="chat-input-field" rows="1"
               placeholder="Message WALL·E…"
@@ -404,18 +415,18 @@
           </div>
         </div>
       </section>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: JOURNAL                        ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           JOURNAL
+      ══════════════════════════════════ -->
       <section id="section-journal" class="page-section">
         <div class="page-header">
           <h2 class="page-title">Wellness Journal</h2>
           <p class="page-subtitle">Reflect, express, and grow.</p>
         </div>
- 
+
         <div class="journal-layout">
-          <div class="card journal-write-panel">
+          <div class="card journal-write-panel glass-panel">
             <h3 class="card-title" id="journal-form-title">New Entry</h3>
             <input id="journal-title" class="field-input" type="text" placeholder="Entry title…" />
             <textarea id="journal-body" class="field-textarea journal-body-area" placeholder="Write your thoughts, feelings, or reflections here…"></textarea>
@@ -425,8 +436,8 @@
             </div>
             <p id="journal-saved-msg" class="feedback-msg"></p>
           </div>
- 
-          <div class="card journal-entries-panel">
+
+          <div class="card journal-entries-panel glass-panel">
             <h3 class="card-title">Past Entries</h3>
             <div id="journal-entries-list" class="journal-entries-list">
               <p class="empty-state">No journal entries yet. Write your first reflection!</p>
@@ -434,17 +445,17 @@
           </div>
         </div>
       </section>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: HABIT TRACKER                  ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           HABITS
+      ══════════════════════════════════ -->
       <section id="section-habits" class="page-section">
         <div class="page-header">
           <h2 class="page-title">Habit Tracker</h2>
           <p class="page-subtitle">Build consistent wellness routines.</p>
         </div>
- 
-        <div class="card mb-4">
+
+        <div class="card mb-4 glass-panel">
           <h3 class="card-title">Add a New Habit</h3>
           <div class="habit-add-row">
             <input id="new-habit-input" class="field-input" type="text" placeholder="e.g. Morning meditation, 8 glasses of water…" />
@@ -461,15 +472,15 @@
             <button class="btn-primary btn-add-habit" onclick="HabitSystem.add()">Add Habit</button>
           </div>
         </div>
- 
+
         <div class="habits-layout">
-          <div class="card">
+          <div class="card glass-panel">
             <h3 class="card-title">Today's Habits</h3>
             <div id="habits-list" class="habits-list">
               <p class="empty-state">No habits yet. Add your first wellness habit above!</p>
             </div>
           </div>
-          <div class="card">
+          <div class="card glass-panel">
             <h3 class="card-title">🔥 Habit Streaks</h3>
             <div id="streaks-list" class="streaks-list">
               <p class="empty-state">Complete habits to build your streak!</p>
@@ -477,20 +488,20 @@
           </div>
         </div>
       </section>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: MOOD BOOST ACTIVITIES          ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           MOOD BOOST
+      ══════════════════════════════════ -->
       <section id="section-moodboost" class="page-section">
         <div class="page-header">
           <h2 class="page-title">Mood Boost Activities</h2>
           <p class="page-subtitle">Science-backed exercises to lift your spirits in minutes.</p>
         </div>
- 
+
         <div class="boost-grid">
- 
-          <!-- Gratitude Exercise -->
-          <div class="card boost-card">
+
+          <!-- Gratitude -->
+          <div class="card boost-card glass-panel">
             <div class="boost-card-header">
               <span class="boost-big-icon">🙏</span>
               <div>
@@ -517,9 +528,9 @@
             <p id="grat-msg" class="feedback-msg"></p>
             <div id="grat-history" class="grat-history-list"></div>
           </div>
- 
+
           <!-- Meditation Timer -->
-          <div class="card boost-card">
+          <div class="card boost-card glass-panel">
             <div class="boost-card-header">
               <span class="boost-big-icon">🧘</span>
               <div>
@@ -551,9 +562,9 @@
               <button class="btn-ghost"   onclick="BoostSystem.resetMed()">↺ Reset</button>
             </div>
           </div>
- 
-          <!-- 4-7-8 Breathing -->
-          <div class="card boost-card">
+
+          <!-- Breathing -->
+          <div class="card boost-card glass-panel">
             <div class="boost-card-header">
               <span class="boost-big-icon">🌬️</span>
               <div>
@@ -569,9 +580,9 @@
             </div>
             <p class="breathing-hint" id="breathing-instruction">Click the circle to begin a guided breathing session.</p>
           </div>
- 
+
           <!-- Affirmation Generator -->
-          <div class="card boost-card">
+          <div class="card boost-card glass-panel">
             <div class="boost-card-header">
               <span class="boost-big-icon">✨</span>
               <div>
@@ -586,34 +597,34 @@
               <button class="aff-cat-btn"        data-cat="peace"    onclick="BoostSystem.setAffCat('peace', this)">Peace</button>
               <button class="aff-cat-btn"        data-cat="growth"   onclick="BoostSystem.setAffCat('growth', this)">Growth</button>
             </div>
-            <div class="big-aff-box">
+            <div class="big-aff-box neumorphic-inset">
               <p class="big-aff-text" id="big-aff-text">"Loading…"</p>
             </div>
             <button class="btn-ghost" onclick="BoostSystem.nextBigAff()">✦ Next Affirmation</button>
           </div>
- 
+
         </div>
       </section>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: INSIGHTS / RECOMMENDATIONS     ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           INSIGHTS / RECOMMENDATIONS
+      ══════════════════════════════════ -->
       <section id="section-recommendations" class="page-section">
         <div class="page-header">
           <h2 class="page-title">Wellness Insights</h2>
           <p class="page-subtitle">Personalized suggestions based on your mood patterns.</p>
         </div>
- 
+
         <div id="recommendations-container" class="rec-grid"></div>
- 
+
         <div class="insights-bottom-row">
-          <div class="card affirmation-card">
+          <div class="card affirmation-card glass-panel">
             <h3 class="card-title">Daily Affirmation</h3>
             <p class="affirmation-quote" id="affirmation-text">"Loading your affirmation…"</p>
             <button class="btn-ghost" onclick="AnalyticsSystem.newAffirmation()">✦ New Affirmation</button>
           </div>
- 
-          <div class="card breathing-card">
+
+          <div class="card breathing-card glass-panel">
             <h3 class="card-title">4-7-8 Breathing</h3>
             <p class="card-desc">A calming technique to reduce stress in minutes.</p>
             <div class="breathing-wrap">
@@ -625,16 +636,16 @@
           </div>
         </div>
       </section>
- 
-      <!-- ╔══════════════════════════════════════════╗
-           ║  SECTION: WELLNESS REPORT                ║
-           ╚══════════════════════════════════════════╝ -->
+
+      <!-- ══════════════════════════════════
+           WELLNESS REPORT
+      ══════════════════════════════════ -->
       <section id="section-report" class="page-section">
         <div class="page-header">
           <h2 class="page-title">Wellness Report</h2>
           <p class="page-subtitle">AI-generated monthly summary of your mental wellness journey.</p>
         </div>
- 
+
         <div class="report-toolbar">
           <div class="report-nav">
             <button class="btn-ghost btn-sm" onclick="AnalyticsSystem.reportPrev()">← Prev</button>
@@ -643,45 +654,126 @@
           </div>
           <button class="btn-primary btn-sm" onclick="AnalyticsSystem.downloadReport()">⬇ Download</button>
         </div>
- 
+
         <div class="report-grid">
-          <div class="card report-card">
+          <div class="card report-card glass-panel">
             <h3 class="card-title">📊 Summary</h3>
             <div id="report-summary" class="report-stat-list"></div>
           </div>
- 
-          <div class="card report-card">
+          <div class="card report-card glass-panel">
             <h3 class="card-title">😊 Mood Distribution</h3>
             <div class="chart-body"><canvas id="reportMoodChart"></canvas></div>
             <p class="report-insight-text" id="report-mood-insight"></p>
           </div>
- 
-          <div class="card report-card">
+          <div class="card report-card glass-panel">
             <h3 class="card-title">✅ Habit Consistency</h3>
             <div class="chart-body"><canvas id="reportHabitChart"></canvas></div>
             <p class="report-insight-text" id="report-habit-insight"></p>
           </div>
- 
-          <div class="card report-card report-ai-card">
+          <div class="card report-card report-ai-card glass-panel">
             <h3 class="card-title">🤖 AI Insights</h3>
             <div id="report-ai-list" class="report-ai-list"></div>
           </div>
- 
-          <div class="card report-card">
+          <div class="card report-card glass-panel">
             <h3 class="card-title">⚠ Notable Days</h3>
             <div id="report-notable" class="report-notable-list"></div>
           </div>
- 
-          <div class="card report-card">
+          <div class="card report-card glass-panel">
             <h3 class="card-title">📓 Journal Activity</h3>
             <div id="report-journal-bars" class="report-journal-bars"></div>
           </div>
         </div>
       </section>
- 
+
+      <!-- ══════════════════════════════════
+           ZEN STATION (SOUNDS)
+      ══════════════════════════════════ -->
+      <section id="section-sounds" class="page-section">
+        <div class="page-header">
+          <h2 class="page-title">Zen Station</h2>
+          <p class="page-subtitle">Immersive soundscapes to calm your mind and improve focus.</p>
+        </div>
+
+        <div class="sounds-grid">
+          <div class="sound-category-label">Nature Melodies</div>
+
+          <div class="sound-card glass-panel" onclick="SoundSystem.toggle('rain')">
+            <div class="sound-icon">🌧️</div>
+            <div class="sound-info">
+              <h4>Summer Rain</h4>
+              <p>Gentle pitter-patter</p>
+            </div>
+            <button class="play-btn" id="btn-rain">▶</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" onclick="event.stopPropagation()" oninput="SoundSystem.setVolume('rain', this.value)">
+          </div>
+
+          <div class="sound-card glass-panel" onclick="SoundSystem.toggle('ocean')">
+            <div class="sound-icon">🌊</div>
+            <div class="sound-info">
+              <h4>Ocean Waves</h4>
+              <p>Rhythmic tides</p>
+            </div>
+            <button class="play-btn" id="btn-ocean">▶</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" onclick="event.stopPropagation()" oninput="SoundSystem.setVolume('ocean', this.value)">
+          </div>
+
+          <div class="sound-card glass-panel" onclick="SoundSystem.toggle('forest')">
+            <div class="sound-icon">🍃</div>
+            <div class="sound-info">
+              <h4>Mystic Forest</h4>
+              <p>Birds &amp; rustling leaves</p>
+            </div>
+            <button class="play-btn" id="btn-forest">▶</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" onclick="event.stopPropagation()" oninput="SoundSystem.setVolume('forest', this.value)">
+          </div>
+
+          <div class="sound-card glass-panel" onclick="SoundSystem.toggle('fire')">
+            <div class="sound-icon">🔥</div>
+            <div class="sound-info">
+              <h4>Cozy Fireplace</h4>
+              <p>Warm crackling wood</p>
+            </div>
+            <button class="play-btn" id="btn-fire">▶</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" onclick="event.stopPropagation()" oninput="SoundSystem.setVolume('fire', this.value)">
+          </div>
+
+          <div class="sound-category-label">Brainwave &amp; Focus</div>
+
+          <div class="sound-card glass-panel" onclick="SoundSystem.toggle('binaural')">
+            <div class="sound-icon">🎧</div>
+            <div class="sound-info">
+              <h4>Alpha Waves</h4>
+              <p>Binaural focus beats</p>
+            </div>
+            <button class="play-btn" id="btn-binaural">▶</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" onclick="event.stopPropagation()" oninput="SoundSystem.setVolume('binaural', this.value)">
+          </div>
+
+          <div class="sound-card glass-panel" onclick="SoundSystem.toggle('delta')">
+            <div class="sound-icon">🌙</div>
+            <div class="sound-info">
+              <h4>Deep Sleep</h4>
+              <p>Delta frequency</p>
+            </div>
+            <button class="play-btn" id="btn-delta">▶</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" onclick="event.stopPropagation()" oninput="SoundSystem.setVolume('delta', this.value)">
+          </div>
+
+          <div class="sound-card glass-panel" onclick="SoundSystem.toggle('white')">
+            <div class="sound-icon">🌫️</div>
+            <div class="sound-info">
+              <h4>White Noise</h4>
+              <p>Pure static calm</p>
+            </div>
+            <button class="play-btn" id="btn-white">▶</button>
+            <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" onclick="event.stopPropagation()" oninput="SoundSystem.setVolume('white', this.value)">
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
- 
+
   <script src="script.js"></script>
 </body>
 </html>
