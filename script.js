@@ -542,7 +542,7 @@ const AICompanion = {
     greeting: ["Hey there! 😊 I'm WALL·E, your mental wellness companion. How are you feeling today?","Hello! It's wonderful to see you. What's on your mind today?","Hi! I'm really glad you stopped by. How's your day going so far?","Good to hear from you! I'm here to listen — what's up?"],
     happy:    ["That's absolutely wonderful to hear! 🌟 What's bringing you joy today?","Amazing! Your positive energy is contagious 😊. What's making you feel so great?","Love that! Savor these happy moments. What's going well for you?","Happiness looks great on you! ✨ Would you like to journal about this?"],
     calm:     ["Feeling calm is such a gift 😌. What's helping you maintain that peace?","Calmness is the foundation of wellbeing. Have you been meditating?","Peaceful moments are worth appreciating. Keep nurturing that inner stillness! 🌿"],
-    sad:      ["I'm really sorry you're feeling sad. 💙 Sadness is valid. Want to talk about what's going on?","Sadness can feel heavy, but you don't carry it alone. What's making you feel this way?","Thank you for sharing that. It sometimes helps to write about it in your journal — would you like to try?","Your feelings matter. Take a gentle breath with me. Can you tell me more? 💙"],
+    sad:      ["I'm really sorry you're feeling sad.Would you like to talk about it? 💙 Sadness is valid. Want to talk about what's going on?","Sadness can feel heavy, but you don't carry it alone. What's making you feel this way?","Thank you for sharing that. It sometimes helps to write about it in your journal — would you like to try?","Your feelings matter. Take a gentle breath with me. Can you tell me more? 💙"],
     stressed: ["Stress is really tough 😔. Let's try breathing — in 4s, hold 7s, out 8s. What's weighing on you?","I can feel the weight in your words. What's the biggest thing stressing you right now?","When stressed, small steps help. What's one thing you could take off your plate today?","You've handled every difficult day so far — 100% success rate! 💪"],
     anxious:  ["Anxiety is so hard. 🫂 Try grounding: name 5 things you can see right now.","Anxiety often comes from uncertainty. Let's take this one breath at a time — you're safe right now.","Deep breath first 🌬️. You are not your anxiety. What's been triggering these feelings?"],
     tired:    ["Rest is genuinely productive 😴. How has your sleep been lately?","Tiredness is a signal. When did you last do something purely relaxing and joyful?","Try a 10-minute walk or nap. Nature + movement resets the mind. 🌿"],
@@ -970,10 +970,29 @@ const BoostSystem = {
 
   /* ── Affirmation Generator ─────────────────────────────── */
   AFF_BANK: {
-    strength:[ '"I have survived 100% of my hardest days. I am stronger than I know."', '"Challenges are invitations to grow stronger. I accept them."', '"I am resilient, resourceful, and ready."', '"Every hard moment has built the person I am today."', '"I am more powerful than any fear or doubt I carry."' ],
-    peace:   [ '"I release what I cannot control and breathe into what I can."', '"In this moment I am safe, grounded, and enough."', '"Peace is not the absence of chaos — it is my response to it."', '"Each exhale releases tension. Each inhale brings calm."', '"I am allowed to rest. I am allowed to be still."' ],
-    growth:  [ '"Growth is not linear, and that is perfectly okay."', '"I am a work in progress, and that is something to celebrate."', '"Every small step I take matters."', '"I am becoming who I am meant to be."', '"Learning and growing are signs of life."' ],
-    all:     [ '"I am enough, exactly as I am, right now."', '"Today I choose progress over perfection."', '"I deserve rest, joy, and kindness — especially from myself."', '"My feelings are valid. My experience matters."', '"I am not my thoughts. I am the one who observes them."', '"I am worthy of love and belonging, always."', '"Each breath is a fresh start."', '"Small steps forward are still steps forward."' ],
+    strength:[ '"I have survived 100% of my hardest days. I am stronger than I know."', '"Challenges are invitations to grow stronger. I accept them."', '"I am resilient, resourceful, and ready."', '"Every hard moment has built the person I am today."', '"I am more powerful than any fear or doubt I carry."', '"Every experience teaches me something valuable."',
+      '"I am constantly evolving into a stronger version of myself."',
+      '"Mistakes are opportunities for growth and learning."',
+      '"Progress, no matter how small, is meaningful."',
+      '"I welcome growth even when it feels uncomfortable."'],
+    peace:   [ '"I release what I cannot control and breathe into what I can."', '"In this moment I am safe, grounded, and enough."', '"Peace is not the absence of chaos — it is my response to it."', '"Each exhale releases tension. Each inhale brings calm."', '"I am allowed to rest. I am allowed to be still."','"I allow calm to flow through my mind and body."',
+         '"I choose peace over worry in this moment."',
+         '"My breath brings me back to a place of calm."',
+         '"I let go of tension and welcome stillness."',
+         '"Peace begins with the way I choose to think."' ],
+    growth:  [ '"Growth is not linear, and that is perfectly okay."', '"I am a work in progress, and that is something to celebrate."', '"Every small step I take matters."', '"I am becoming who I am meant to be."', '"Learning and growing are signs of life."','"Every experience teaches me something valuable."',
+        '"I am constantly evolving into a stronger version of myself."',
+        '"Mistakes are opportunities for growth and learning."',
+        '"Progress, no matter how small, is meaningful."',
+        '"I welcome growth even when it feels uncomfortable."' ],
+    all:     [ '"I am enough, exactly as I am, right now."', '"Today I choose progress over perfection."', '"I deserve rest, joy, and kindness — especially from myself."', '"My feelings are valid. My experience matters."', '"I am not my thoughts. I am the one who observes them."', '"I am worthy of love and belonging, always."', '"Each breath is a fresh start."', '"Small steps forward are still steps forward."','"I am capable, calm, and confident in my journey."',
+      '"Each new day gives me a fresh chance to grow."',
+      '"I honor my feelings and care for my well-being."',
+      '"I trust myself to handle whatever comes my way."',
+      '"I deserve kindness, patience, and understanding."',
+      '"My journey is unique and meaningful."',
+      '"I am learning, growing, and becoming stronger."',
+      '"I choose compassion toward myself today."' ],
   },
 
   setAffCat(cat, btn) {
@@ -1158,7 +1177,68 @@ const AnalyticsSystem = {
     URL.revokeObjectURL(url);
   },
 };
+/* ======================================== 
+   ZEN STATION: SOUND CONTROLLER
+   ======================================== */
+const SoundSystem = {
+  activeSounds: {},
+  
+  // High-quality CDN assets
+  library: {
+    rain: "Rain.mp3",
+    ocean: "Ocean.wav",
+    forest: "Forest.mp3",
+    fire: "Fireplace.m4a",
+    binaural: "Binaural.m4a",
+    delta: "Delta Waves.mp3",
+    white: "White Noise.mp3"
+  },
 
+  toggle(id) {
+    // Using your _qs and _$ helpers
+    const card = _qs(`[onclick*="toggle('${id}')"]`);
+    const btn = _$( `btn-${id}`);
+
+    if (this.activeSounds[id]) {
+      // If currently playing: Stop it
+      this.activeSounds[id].pause();
+      delete this.activeSounds[id];
+      if(card) card.classList.remove('active');
+      if(btn) btn.textContent = "▶";
+    } else {
+      // If not playing: Start it
+      const audio = new Audio(this.library[id]);
+      audio.loop = true;
+      
+      // Look for the volume slider inside this card
+      const slider = card ? card.querySelector('.volume-slider') : null;
+      audio.volume = slider ? parseFloat(slider.value) : 0.5;
+      
+      audio.play().catch(e => console.log("Audio play blocked until user interaction."));
+      
+      this.activeSounds[id] = audio;
+      if(card) card.classList.add('active');
+      if(btn) btn.textContent = "⏸";
+    }
+  },
+
+  setVolume(id, val) {
+    if (this.activeSounds[id]) {
+      this.activeSounds[id].volume = parseFloat(val);
+    }
+  },
+
+  stopAll() {
+    Object.keys(this.activeSounds).forEach(id => {
+      this.activeSounds[id].pause();
+      const card = _qs(`[onclick*="toggle('${id}')"]`);
+      const btn = _$( `btn-${id}`);
+      if(card) card.classList.remove('active');
+      if(btn) btn.textContent = "▶";
+    });
+    this.activeSounds = {};
+  }
+};
 
 /* ══════════════════════════════════════════════════════════════
    INITIALIZATION
