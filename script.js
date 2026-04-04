@@ -1187,7 +1187,7 @@ const SoundSystem = {
   library: {
     rain: "Rain.mp3",
     ocean: "Ocean.wav",
-    forest: "Forest.mp3",
+    forest: "Forest(1).mp3",
     fire: "Fireplace.m4a",
     binaural: "Binaural.m4a",
     delta: "Delta Waves.mp3",
