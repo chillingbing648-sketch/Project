@@ -1185,12 +1185,12 @@ const SoundSystem = {
   
   // High-quality CDN assets
   library: {
-    rain: "Rain.mp3",
+    rain: "Gentle Rain.mp3",
     ocean: "Ocean.wav",
-    forest: "Forest(1).mp3",
-    fire: "Fireplace.m4a",
-    binaural: "Binaural.m4a",
-    delta: "Delta Waves.mp3",
+    forest: "Forest (1).mp3",
+    fire: "Fire.mp3",
+    binaural: "Binaural Beats.mp3",
+    delta: "Delta.mp3",
     white: "White Noise.mp3"
   },
 
